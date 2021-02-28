@@ -35,4 +35,14 @@ betRouter.delete("/:wagerId", (req, res, next) => {
         return res.status(200).send(`Successfully deleted ${deletedWager.bet} from your bet`)
     })
 })
+// update wager
+betRouter.update("/:wagerId", (req, res, next) => {
+    Bet.findOneAndUpdate({ _id: req.params.wagerId}, req.body, {new: true}, (err, updatedWager) => {
+        if(err){
+            res.status(500)
+            return next(err)
+        }
+        return res.status(201).send(updatedWager)
+    })
+})
 module.exports = betRouter
